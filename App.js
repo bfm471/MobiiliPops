@@ -3,14 +3,36 @@ import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import LoginScreen from './screens/LoginScreen';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import SigninScreen from './screens/SigninScreen';
+
+const Drawer = createDrawerNavigator();
+const Stack = createNativeStackNavigator();
+
+function LoginStack() {
+  return(
+    <Stack.Navigator>
+      <Stack.Screen 
+        name='Login' 
+        component={LoginScreen} 
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name='Signin'
+        component={SigninScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  )
+
+}
 
 export default function App() {
-  const Drawer = createDrawerNavigator();
 
   return (
     <NavigationContainer>
-      <Drawer.Navigator>
-        <Drawer.Screen name='Login' component={LoginScreen} />
+      <Drawer.Navigator initialRouteName='LoginStack'>
+        <Drawer.Screen name='LoginStack' component={LoginStack} options={{ title: 'Login / SignIn' }} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
