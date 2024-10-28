@@ -2,12 +2,14 @@ import { Alert, StyleSheet, Text, View } from "react-native";
 import Header from "../components/Header";
 import TextInputCustom from "../components/TextInput";
 import ButtonCustom from "../components/Button";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import LoginSigninLink from "../components/LoginSigninLink";
 
 export default function LoginScreen({ navigation }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
+    const passwordRef = useRef(null);
 
     const handleLogin = () => {
         Alert.alert("Nappi painettu!", username + " " + password);
@@ -22,10 +24,18 @@ export default function LoginScreen({ navigation }) {
                 <TextInputCustom 
                     placeholder='Username'
                     onChangeText={(text) => setUsername(text)}
+                    textContentType='username'
+                    returnKeyType='next'
+                    onSubmitEditing={() => passwordRef.current.focus()}
                 />
                 <TextInputCustom 
                     placeholder='Password'
                     onChangeText={(text) => setPassword(text)}
+                    textContentType='password'
+                    returnKeyType='done'
+                    onSubmitEditing={() => handleLogin()}
+                    secureTextEntry={true}
+                    ref={passwordRef}
                 />
                 <ButtonCustom
                     title="Log In"

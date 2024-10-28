@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { forwardRef, useState } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 
-export default function TextInputCustom({ placeholder, onChangeText, value }) {
+const TextInputCustom = forwardRef (({ placeholder, onChangeText, value, textContentType, returnKeyType, onSubmitEditing, secureTextEntry }, ref) => {
 
     return(
         <View>
@@ -9,11 +9,16 @@ export default function TextInputCustom({ placeholder, onChangeText, value }) {
                 placeholder={placeholder}
                 onChangeText={onChangeText}
                 value={value}
+                textContentType={textContentType}
+                returnKeyType={returnKeyType}
+                onSubmitEditing={onSubmitEditing}
+                secureTextEntry={secureTextEntry}
+                ref={ref}
                 style={styles.textinput}
             />
         </View>
     )
-}
+})
 
 const styles = StyleSheet.create({
     textinput: {
@@ -27,3 +32,5 @@ const styles = StyleSheet.create({
         borderColor: 'black'
     },
   });
+
+  export default TextInputCustom;
