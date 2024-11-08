@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { PaperProvider } from 'react-native-paper';
 import SigninScreen from './screens/SigninScreen';
 import HomeScreen from './screens/HomeScreen';
+import LogOut from './components/LogOut';
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -36,6 +37,7 @@ export default function App() {
       <NavigationContainer>
         <Drawer.Navigator initialRouteName='LoginStack'>
           <Drawer.Screen name='LoginStack' component={LoginStack} options={{ title: 'Login / SignIn', drawerItemStyle: { display: 'none'}, headerShown: false }} />
+          <Drawer.Screen name='LogOut' component={LogOut} />
           <Drawer.Screen name='Home' component={HomeScreen} options={{ title: 'Random Joke'}} />
         </Drawer.Navigator>
       </NavigationContainer>
