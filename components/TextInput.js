@@ -25,13 +25,7 @@ const TextInputCustom = forwardRef (({ placeholder, onChangeText, value, textCon
 const styles = StyleSheet.create({
     textinput: {
         width: '100%',
-        // height: 40,
-        // padding: 10,
         margin: 10,
-        // fontSize: 15,
-
-        // borderWidth: 1,
-        // borderColor: 'black'
     },
   });
 
