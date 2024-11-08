@@ -1,8 +1,8 @@
 import { forwardRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { TextInput } from "react-native-paper";
+import { TextInput, HelperText } from "react-native-paper";
 
-const TextInputCustom = forwardRef (({ placeholder, onChangeText, value, textContentType, returnKeyType, onSubmitEditing, secureTextEntry, label }, ref) => {
+const TextInputCustom = forwardRef (({ placeholder, onChangeText, value, textContentType, returnKeyType, onSubmitEditing, secureTextEntry, label, error, errortextVisible, errortext }, ref) => {
 
     return(
         <View>
@@ -17,7 +17,11 @@ const TextInputCustom = forwardRef (({ placeholder, onChangeText, value, textCon
                 ref={ref}
                 style={styles.textinput}
                 label={label}
+                error={error}
             />
+            <HelperText visible={errortextVisible} type="error">
+                {errortext}
+            </HelperText>
         </View>
     )
 })
@@ -25,7 +29,6 @@ const TextInputCustom = forwardRef (({ placeholder, onChangeText, value, textCon
 const styles = StyleSheet.create({
     textinput: {
         width: '100%',
-        margin: 10,
     },
   });
 
