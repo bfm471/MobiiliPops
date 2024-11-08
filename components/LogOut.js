@@ -16,7 +16,7 @@ export default function LogOut({ navigation }) {
                 Alert.alert("Something went wrong with the signout.")
             })
         )
-    })
+    }, []);
 
     return null;
 }
