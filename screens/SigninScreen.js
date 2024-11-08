@@ -1,4 +1,6 @@
 import { Alert, StyleSheet, Text, View } from "react-native";
+import { app } from "../configs/FirebaseConfig";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import Header from "../components/Header";
 import TextInputCustom from "../components/TextInput";
 import ButtonCustom from "../components/Button";
@@ -6,6 +8,8 @@ import { useRef, useState } from "react";
 import LoginSigninLink from "../components/LoginSigninLink";
 
 export default function SigninScreen({ navigation }) {
+    const auth = getAuth(app);
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [checkPassword, setCheckPassword] = useState('');
@@ -17,15 +21,31 @@ export default function SigninScreen({ navigation }) {
         if (password !== checkPassword) {
             Alert.alert('Check password!');
         } else {
-            Alert.alert("Nappi painettu Signup!", username + " " + password);
-            // luo tili
+            createUserWithEmailAndPassword(auth, username, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                setUsername('');
+                setPassword('');
+                setCheckPassword('');
+                navigation.navigate('Home');
+            })
+            .catch((error) => {
+                console.log("VIRHE:", error);
+                if (error.code == 'auth/email-already-in-use') {
+                    Alert.alert("Looks like you already have an account. Please Log in.");
+                    navigation.navigate('Login', {username: username});
+                } else {
+                    Alert.alert('Error occured while registering.')
+                }
+            })
         }
     }
 
     // ChatGpt:n refaktorointi-idean perusteella
+    // regex: https://www.mailercheck.com/articles/email-validation-javascript
     const inputValidations = {
-        username: username.length > 0 && username.length < 3,
-        password: password.length > 0 && password.length < 5,
+        username: username.length > 0 && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(username),
+        password: password.length > 0 && password.length < 6,
         checkPassword: checkPassword.length == password.length && checkPassword !== password
     }
 
@@ -41,10 +61,10 @@ export default function SigninScreen({ navigation }) {
                     returnKeyType='next'
                     onSubmitEditing={() => passwordRef.current.focus()}
                     value={username}
-                    label='Choose your username'
+                    label='Email'
                     error={inputValidations.username}
                     errortextVisible={inputValidations.username}
-                    errortext='Must be at least 3 characters'
+                    errortext='Enter valid email address'
                 />
                 <TextInputCustom 
                     onChangeText={(text) => setPassword(text)}
