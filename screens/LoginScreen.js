@@ -22,20 +22,22 @@ export default function LoginScreen({ navigation }) {
             </View>
             <View style={styles.inputContainer}>
                 <TextInputCustom 
-                    placeholder='Username'
                     onChangeText={(text) => setUsername(text)}
+                    value={username}
                     textContentType='username'
                     returnKeyType='next'
                     onSubmitEditing={() => passwordRef.current.focus()}
+                    label='Username'
                 />
                 <TextInputCustom 
-                    placeholder='Password'
                     onChangeText={(text) => setPassword(text)}
+                    value={password}
                     textContentType='password'
                     returnKeyType='done'
-                    onSubmitEditing={() => handleLogin()}
+                    onSubmitEditing={() => handleLogin()} // vai sulkee vain näppäimistön?
                     secureTextEntry={true}
                     ref={passwordRef}
+                    label='Password'
                 />
                 <ButtonCustom
                     title="Log In"

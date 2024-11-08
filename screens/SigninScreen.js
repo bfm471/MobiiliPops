@@ -29,15 +29,14 @@ export default function SigninScreen({ navigation }) {
             </View>
             <View style={styles.inputContainer}>
                 <TextInputCustom 
-                    placeholder='Choose your username'
                     onChangeText={(text) => setUsername(text)}
                     textContentType='username'
                     returnKeyType='next'
                     onSubmitEditing={() => passwordRef.current.focus()}
-                    value={username}                    
+                    value={username}
+                    label='Choose your username'
                 />
                 <TextInputCustom 
-                    placeholder='Choose your password'
                     onChangeText={(text) => setPassword(text)}
                     value={password}
                     textContentType='newPassword'
@@ -45,15 +44,16 @@ export default function SigninScreen({ navigation }) {
                     onSubmitEditing={() => passwordCheckRef.current.focus()}
                     secureTextEntry={true}
                     ref={passwordRef}
+                    label='Choose your password'
                 />
                 <TextInputCustom 
-                    placeholder='Enter password again'
                     onChangeText={(text) => setCheckPassword(text)}
                     value={checkPassword}
                     returnKeyType='done'
                     onSubmitEditing={() => handleRegister()}
                     secureTextEntry={true}
                     ref={passwordCheckRef}
+                    label='Enter password again'
                 />
                 <ButtonCustom
                     title="Register"

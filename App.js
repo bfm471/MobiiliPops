@@ -4,6 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import LoginScreen from './screens/LoginScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { PaperProvider } from 'react-native-paper';
 import SigninScreen from './screens/SigninScreen';
 
 const Drawer = createDrawerNavigator();
@@ -30,11 +31,13 @@ function LoginStack() {
 export default function App() {
 
   return (
-    <NavigationContainer>
-      <Drawer.Navigator initialRouteName='LoginStack'>
-        <Drawer.Screen name='LoginStack' component={LoginStack} options={{ title: 'Login / SignIn' }} />
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <PaperProvider>
+      <NavigationContainer>
+        <Drawer.Navigator initialRouteName='LoginStack'>
+          <Drawer.Screen name='LoginStack' component={LoginStack} options={{ title: 'Login / SignIn' }} />
+        </Drawer.Navigator>
+      </NavigationContainer>
+    </PaperProvider>
   );
 }
 
