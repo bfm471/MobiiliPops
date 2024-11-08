@@ -35,8 +35,8 @@ export default function App() {
     <PaperProvider>
       <NavigationContainer>
         <Drawer.Navigator initialRouteName='LoginStack'>
-          <Drawer.Screen name='LoginStack' component={LoginStack} options={{ title: 'Login / SignIn' }} />
-          <Drawer.Screen name='Home' component={HomeScreen} options={{ title: 'Home'}} />
+          <Drawer.Screen name='LoginStack' component={LoginStack} options={{ title: 'Login / SignIn', drawerItemStyle: { display: 'none'}, headerShown: false }} />
+          <Drawer.Screen name='Home' component={HomeScreen} options={{ title: 'Random Joke'}} />
         </Drawer.Navigator>
       </NavigationContainer>
     </PaperProvider>
