@@ -6,6 +6,7 @@ import LoginScreen from './screens/LoginScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { PaperProvider } from 'react-native-paper';
 import SigninScreen from './screens/SigninScreen';
+import HomeScreen from './screens/HomeScreen';
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -35,6 +36,7 @@ export default function App() {
       <NavigationContainer>
         <Drawer.Navigator initialRouteName='LoginStack'>
           <Drawer.Screen name='LoginStack' component={LoginStack} options={{ title: 'Login / SignIn' }} />
+          <Drawer.Screen name='Home' component={HomeScreen} options={{ title: 'Home'}} />
         </Drawer.Navigator>
       </NavigationContainer>
     </PaperProvider>
