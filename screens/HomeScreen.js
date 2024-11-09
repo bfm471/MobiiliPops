@@ -1,7 +1,9 @@
 import { StyleSheet, View } from "react-native";
 import { Card, Text } from "react-native-paper";
+
 import { fetchData } from "../services/Api";
 import { useEffect, useState } from "react";
+import LikeIcon from "../components/LikeIcon";
 
 export default function HomeScreen({ navigation }) {
     const [joke, setJoke] = useState('');
@@ -18,15 +20,20 @@ export default function HomeScreen({ navigation }) {
         }
     }
 
+    const handlePress = () => {
+        console.log("SYDÄN PAINETTU")
+    }
+
     return (
         <View style={styles.cardContainer}>
             <Card style={styles.card}>
                 <Card.Content>
-                    <Text
-                        variant="titleMedium"
-                    >
+                    <Text variant="titleMedium" style={styles.cardText}>
                         {joke}
                     </Text>
+                    <View style={styles.iconContainer}>
+                        <LikeIcon onPress={handlePress}/>
+                    </View>
                 </Card.Content>
             </Card>
         </View>
@@ -35,14 +42,20 @@ export default function HomeScreen({ navigation }) {
 
 const styles = StyleSheet.create({
     cardContainer: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     card: {
         minWidth: '70%',
         maxWidth: '90%',
-        backgroundColor: 'hotpink'
+        minHeight: 160,
+        backgroundColor: 'lightgray',
+        justifyContent: "center",
+    },
+    iconContainer: {
+        alignItems: "flex-end",
+        paddingTop: 20
     }
-  });
+});
