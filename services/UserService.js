@@ -11,3 +11,13 @@ export const storeUserCreds = async (user) => {
         console.log("ERROR saving data to asyncStorage", error);
     }
 }
+
+export const getUserCreds = async () => {
+    try {
+            const creds = await AsyncStorage.getItem('userinfo');
+            return JSON.parse(creds);
+        
+    } catch (error) {
+        console.log("ERROR getting usercredentials");
+    }
+}
