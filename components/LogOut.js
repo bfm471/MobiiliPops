@@ -1,6 +1,8 @@
-import { getAuth, signOut } from "firebase/auth";
-import { app } from "../configs/FirebaseConfig";
 import { useEffect } from "react";
+import { getAuth, signOut } from "firebase/auth";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { app } from "../configs/FirebaseConfig";
 
 export default function LogOut({ navigation }) {
     const auth = getAuth(app);
@@ -8,7 +10,8 @@ export default function LogOut({ navigation }) {
     console.log("LOGOUT");
     useEffect(() => {
         (signOut(auth)
-            .then(() => {
+            .then(async () => {
+                await AsyncStorage.clear();
                 navigation.navigate('Login');
             })
             .catch((error) => {

@@ -1,6 +1,7 @@
 import { Alert, StyleSheet, Text, View } from "react-native";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useRef, useState, useEffect } from "react";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { app } from "../configs/FirebaseConfig";
 import Header from "../components/Header";
@@ -11,23 +12,39 @@ import LoginSigninLink from "../components/LoginSigninLink";
 export default function LoginScreen({ navigation, route }) {
     const auth = getAuth(app);
     const prevUsername = route?.params?.username;
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    // const [username, setUsername] = useState('');
+    // const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('lom@lom.fi');
+    const [password, setPassword] = useState('lomlom');
 
     const passwordRef = useRef(null);
 
     const handleLogin = () => {
         signInWithEmailAndPassword(auth, username, password)
-        .then((userCredential) => {
+        .then(async (userCredential) => {
             const user = userCredential.user;
             setUsername('');
             setPassword('');
-            console.log(user.email);
+            await storeUserCreds(user);
+            let value = await AsyncStorage.getItem('userinfo');
             navigation.navigate('Home');
-        }).catch((error) => {
+        })
+        .catch((error) => {
             console.log("ERROR with signin:", error);
             Alert.alert("Error occured while signing in.")
         })
+    }
+
+    const storeUserCreds = async (user) => {
+        try {
+            const userInfo = {
+                'username': user.email,
+                'id': user.uid
+            }
+            await AsyncStorage.setItem('userinfo', JSON.stringify(userInfo));            
+        } catch (error) {
+            console.log("ERROR saving data to asyncStorage", error);
+        }
     }
 
     useEffect(() => {
