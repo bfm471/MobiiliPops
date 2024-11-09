@@ -5,6 +5,7 @@ import { fetchData } from "../services/Api";
 import { useEffect, useState } from "react";
 import LikeIcon from "../components/LikeIcon";
 import LikeIconPressed from "../components/LikeIconPressed";
+import { deleteItem, saveItem } from "../services/DatabaseService";
 
 export default function HomeScreen({ navigation }) {
     const [joke, setJoke] = useState('');
@@ -14,11 +15,19 @@ export default function HomeScreen({ navigation }) {
         getRandomJoke();
     }, []);
 
+    useEffect(() => {
+        if (liked) {
+            saveItem(joke);
+        } else {
+            deleteItem(joke); 
+        }
+    }, [liked]);
+
     const getRandomJoke = async () => {
         const response = await fetchData('https://icanhazdadjoke.com');
-        console.log("VITSI", response.joke);
+        console.log("VITSI", response);
         if (response) {
-            setJoke(response.joke);
+            setJoke(response);
         }
     }
 
@@ -31,7 +40,7 @@ export default function HomeScreen({ navigation }) {
             <Card style={styles.card}>
                 <Card.Content>
                     <Text variant="titleMedium" style={styles.cardText}>
-                        {joke}
+                        {joke.joke}
                     </Text>
                     <View style={styles.iconContainer}>
                         {
