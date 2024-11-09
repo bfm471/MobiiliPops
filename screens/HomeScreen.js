@@ -9,19 +9,19 @@ import { deleteItem, saveItem } from "../services/DatabaseService";
 
 export default function HomeScreen({ navigation }) {
     const [joke, setJoke] = useState('');
-    const [liked, setLiked] = useState('');
+    const [isLiked, setIsLiked] = useState('');
 
     useEffect(() => {
         getRandomJoke();
     }, []);
 
-    useEffect(() => {
-        if (liked) {
+    const toggleJoke = (like) => {
+        if (like) {
             saveItem(joke);
         } else {
             deleteItem(joke); 
         }
-    }, [liked]);
+    }
 
     const getRandomJoke = async () => {
         const response = await fetchData('https://icanhazdadjoke.com');
@@ -32,7 +32,9 @@ export default function HomeScreen({ navigation }) {
     }
 
     const handlePress = () => {
-        setLiked(!liked);
+        const liked = isLiked;
+        setIsLiked(!isLiked);
+        toggleJoke(!liked);
     }
 
     return (
@@ -44,7 +46,7 @@ export default function HomeScreen({ navigation }) {
                     </Text>
                     <View style={styles.iconContainer}>
                         {
-                            liked ?
+                            isLiked ?
                             <LikeIconPressed onPress={handlePress} /> :
                             <LikeIcon onPress={handlePress}/>
                         }

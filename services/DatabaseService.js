@@ -1,9 +1,9 @@
-import { getDatabase, push, ref } from "firebase/database";
+import { getDatabase, push, ref, remove, set } from "firebase/database";
 
 import { app } from '../configs/FirebaseConfig';
 import { getUserCreds } from "./UserService";
 
-const database = getDatabase(app)
+const database = getDatabase(app);
 
 export const saveItem = async (item) => {
     console.log("TALLENNA VITSI")
@@ -13,7 +13,8 @@ export const saveItem = async (item) => {
 
     try {
             if (item.id && item.joke) {
-                push(ref(database, `${userId}/`), {item});
+                const dbRef = ref(database, `${userId}/${item.id}`);
+                await set(dbRef, { joke: item.joke});
             } else {
                 console.log("ERROR - no joke to save")
             }
@@ -23,6 +24,15 @@ export const saveItem = async (item) => {
     }
 }
 
-export const deleteItem = () => {
+export const deleteItem = async (item) => {
     console.log("POISTA VITSI");
+
+    const creds = await getUserCreds();
+    const userId = creds.id;
+
+    try {
+        remove(ref(database, `${userId}/${item.id}`))
+    } catch (error) {
+        console.log("ERROR with delete item", error);
+    }
 }
