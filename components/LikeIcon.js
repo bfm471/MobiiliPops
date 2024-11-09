@@ -4,12 +4,11 @@ import { Pressable } from 'react-native'
 export default function LikeIcon({ onPress }) {
 
     return (
-        <Pressable onPress={onPress}>
+        <Pressable onPress={onPress} hitSlop={5}>
             <Icon
                 source="cards-heart-outline"
                 size={28}
                 color='#98002e'
-                style
             />
         </Pressable>
     )

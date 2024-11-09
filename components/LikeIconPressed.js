@@ -4,7 +4,7 @@ import { Pressable } from 'react-native'
 export default function LikeIconPressed({ onPress }) {
 
     return (
-        <Pressable onPress={onPress}>
+        <Pressable onPress={onPress} hitSlop={5}>
             <Icon
                 source="cards-heart"
                 size={28}
