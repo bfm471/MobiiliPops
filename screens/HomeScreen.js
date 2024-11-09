@@ -4,9 +4,11 @@ import { Card, Text } from "react-native-paper";
 import { fetchData } from "../services/Api";
 import { useEffect, useState } from "react";
 import LikeIcon from "../components/LikeIcon";
+import LikeIconPressed from "../components/LikeIconPressed";
 
 export default function HomeScreen({ navigation }) {
     const [joke, setJoke] = useState('');
+    const [liked, setLiked] = useState('');
 
     useEffect(() => {
         getRandomJoke();
@@ -21,7 +23,7 @@ export default function HomeScreen({ navigation }) {
     }
 
     const handlePress = () => {
-        console.log("SYDÄN PAINETTU")
+        setLiked(!liked);
     }
 
     return (
@@ -32,7 +34,11 @@ export default function HomeScreen({ navigation }) {
                         {joke}
                     </Text>
                     <View style={styles.iconContainer}>
-                        <LikeIcon onPress={handlePress}/>
+                        {
+                            liked ?
+                            <LikeIconPressed onPress={handlePress} /> :
+                            <LikeIcon onPress={handlePress}/>
+                        }
                     </View>
                 </Card.Content>
             </Card>
