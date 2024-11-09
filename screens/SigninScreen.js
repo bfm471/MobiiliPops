@@ -1,4 +1,4 @@
-import { Alert, StyleSheet, Text, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import { app } from "../configs/FirebaseConfig";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import Header from "../components/Header";
@@ -6,13 +6,18 @@ import TextInputCustom from "../components/TextInput";
 import ButtonCustom from "../components/Button";
 import { useRef, useState } from "react";
 import LoginSigninLink from "../components/LoginSigninLink";
+import { storeUserCreds } from "../services/UserService";
 
 export default function SigninScreen({ navigation }) {
     const auth = getAuth(app);
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [checkPassword, setCheckPassword] = useState('');
+    // const [username, setUsername] = useState('');
+    // const [password, setPassword] = useState('');
+    // const [checkPassword, setCheckPassword] = useState('');
+    const [username, setUsername] = useState('moi@moi.fi');
+    const [password, setPassword] = useState('moimoi');
+    const [checkPassword, setCheckPassword] = useState('moimoi');
+
 
     const passwordRef = useRef(null);
     const passwordCheckRef = useRef(null);
@@ -22,11 +27,12 @@ export default function SigninScreen({ navigation }) {
             Alert.alert('Check password!');
         } else {
             createUserWithEmailAndPassword(auth, username, password)
-            .then((userCredential) => {
+            .then(async (userCredential) => {
                 const user = userCredential.user;
                 setUsername('');
                 setPassword('');
                 setCheckPassword('');
+                await storeUserCreds(user);
                 navigation.navigate('Home');
             })
             .catch((error) => {
