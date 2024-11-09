@@ -6,19 +6,22 @@ import { app } from "../configs/FirebaseConfig";
 
 export default function LogOut({ navigation }) {
     const auth = getAuth(app);
-
-    console.log("LOGOUT");
-    useEffect(() => {
-        (signOut(auth)
-            .then(async () => {
+    
+ useEffect(() => {
+        const logOutUser = async () => {
+            try {
+                await signOut(auth);
+                console.log("User signed out.");
                 await AsyncStorage.clear();
+                console.log("Storage cleared.");
                 navigation.navigate('Login');
-            })
-            .catch((error) => {
+            } catch (error) {
                 console.log("ERROR with signOut", error);
-                Alert.alert("Something went wrong with the signout.")
-            })
-        )
+                Alert.alert("Something went wrong with the logout.");
+            }
+        };
+
+        logOutUser();
     }, []);
 
     return null;
