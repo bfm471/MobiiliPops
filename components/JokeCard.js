@@ -12,20 +12,24 @@ export default function JokeCard({ joke }) {
 
     useEffect(() => {
         assignStatus();
-    }, [])
+    }, [joke])
 
     const assignStatus = async () => {
         const favouriteKeys = JSON.parse(await AsyncStorage.getItem("favouriteKeys"));
-        if (favouriteKeys.includes(joke.id)) {
+        if (favouriteKeys && favouriteKeys.includes(joke.id)) {
             setIsLiked(true);
+        } else {
+            setIsLiked(false);
         }
     }
 
     const handlePress = () => {
         const liked = isLiked;
         setIsLiked(!isLiked);
-        toggleJoke(!liked);
-    }
+        setTimeout(() => {
+            toggleJoke(!liked);
+            
+        }, 500);    }
 
     const toggleJoke = (like) => {
         if (like) {

@@ -12,10 +12,10 @@ import { storeUserCreds } from "../services/UserService";
 export default function LoginScreen({ navigation, route }) {
     const auth = getAuth(app);
     const prevUsername = route?.params?.username;
-    // const [username, setUsername] = useState('');
-    // const [password, setPassword] = useState('');
-    const [username, setUsername] = useState('lom@lom.fi');
-    const [password, setPassword] = useState('lomlom');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    // const [username, setUsername] = useState('lom@lom.fi');
+    // const [password, setPassword] = useState('lomlom');
 
     const handleLogin = () => {
         signInWithEmailAndPassword(auth, username, password)

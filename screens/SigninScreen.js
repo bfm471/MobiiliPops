@@ -11,12 +11,12 @@ import { storeUserCreds } from "../services/UserService";
 export default function SigninScreen({ navigation }) {
     const auth = getAuth(app);
 
-    // const [username, setUsername] = useState('');
-    // const [password, setPassword] = useState('');
-    // const [checkPassword, setCheckPassword] = useState('');
-    const [username, setUsername] = useState('moi@moi.fi');
-    const [password, setPassword] = useState('moimoi');
-    const [checkPassword, setCheckPassword] = useState('moimoi');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [checkPassword, setCheckPassword] = useState('');
+    // const [username, setUsername] = useState('moi@moi.fi');
+    // const [password, setPassword] = useState('moimoi');
+    // const [checkPassword, setCheckPassword] = useState('moimoi');
 
 
     const passwordRef = useRef(null);
@@ -83,7 +83,7 @@ export default function SigninScreen({ navigation }) {
                     label='Choose your password'
                     error={inputValidations.password}
                     errortextVisible={inputValidations.password}
-                    errortext='Must be at least four letters'
+                    errortext='Must be at least six letters'
                 />
                 <TextInputCustom 
                     onChangeText={(text) => setCheckPassword(text)}
