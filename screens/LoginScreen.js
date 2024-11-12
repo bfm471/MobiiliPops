@@ -28,7 +28,11 @@ export default function LoginScreen({ navigation, route }) {
         })
         .catch((error) => {
             console.log("ERROR with signin:", error);
-            Alert.alert("Error occured while signing in.")
+            if (error.code == 'auth/invalid-credential') {
+                Alert.alert("Check email / password!")
+            } else {
+                Alert.alert("Error occured while signing in.")
+            }
         })
     }
 
