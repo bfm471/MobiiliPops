@@ -1,4 +1,5 @@
 import { getDatabase, onValue, ref, remove, set } from "firebase/database";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { app } from '../configs/FirebaseConfig';
 import { getUserCreds } from "./UserService";
@@ -31,13 +32,13 @@ export const deleteItem = async (item) => {
     const userId = creds.id;
 
     try {
-        remove(ref(database, `${userId}/${item.id ?? item.key}`))
+        remove(ref(database, `${userId}/${item.id}`))
     } catch (error) {
         console.log("ERROR with delete item", error);
     }
 }
 
-export const readItems = async (setJokes) => {
+export const getFavorites = async (setJokes) => {
     console.log("TUO VITSIT");
 
     const creds = await getUserCreds();
@@ -48,8 +49,9 @@ export const readItems = async (setJokes) => {
         if (snapshot.exists()) {
             const data = snapshot.val();
             const keys = Object.keys(data);
+            AsyncStorage.setItem("favouriteKeys", JSON.stringify(keys));
             const keysAndData = Object.values(data).map((obj, index) => {
-                return { ...obj, key: keys[index] }
+                return { ...obj, id: keys[index] }
             })
             setJokes(keysAndData);
         }
