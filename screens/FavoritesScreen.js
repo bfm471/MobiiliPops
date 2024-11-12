@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet, View } from "react-native";
 import { useEffect, useState } from "react";
 
-import { readItems } from "../services/DatabaseService";
+import { getFavorites } from "../services/DatabaseService";
 import JokeCard from "../components/JokeCard";
 
 export default function FavoriteScreen({ navigation }) {
@@ -12,7 +12,7 @@ export default function FavoriteScreen({ navigation }) {
     }, []);
 
     const getFavoriteJokes = () => {
-        readItems(setJokes);
+        getFavorites(setJokes);
     }
 
     return (

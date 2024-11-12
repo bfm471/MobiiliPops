@@ -1,13 +1,25 @@
 import { StyleSheet, View } from "react-native";
 import LikeIconPressed from "./LikeIconPressed";
 import LikeIcon from "./LikeIcon";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, Text } from "react-native-paper";
 
 import { deleteItem, saveFavoriteJoke } from "../services/DatabaseService";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function JokeCard({ joke }) {
     const [isLiked, setIsLiked] = useState('');
+
+    useEffect(() => {
+        assignStatus();
+    }, [])
+
+    const assignStatus = async () => {
+        const favouriteKeys = JSON.parse(await AsyncStorage.getItem("favouriteKeys"));
+        if (favouriteKeys.includes(joke.id)) {
+            setIsLiked(true);
+        }
+    }
 
     const handlePress = () => {
         const liked = isLiked;
