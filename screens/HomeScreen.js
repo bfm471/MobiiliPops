@@ -1,5 +1,6 @@
-import { StyleSheet, View } from "react-native";
+import { RefreshControl, StyleSheet, View } from "react-native";
 import { useEffect, useState } from "react";
+import { ScrollView } from "react-native-gesture-handler";
 
 import { fetchData } from "../services/Api";
 import JokeCard from "../components/JokeCard";
@@ -20,9 +21,14 @@ export default function HomeScreen({ navigation }) {
     }
 
     return (
-        <View style={styles.cardContainer}>
+        <ScrollView 
+            contentContainerStyle={styles.cardContainer} 
+            refreshControl={
+                <RefreshControl 
+                    onRefresh={getRandomJoke}
+                />}>
             <JokeCard joke={joke} />
-        </View>
+        </ScrollView>
     )
 }
 

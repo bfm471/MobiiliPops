@@ -19,7 +19,7 @@ export default function FavoriteScreen({ navigation }) {
         <ScrollView>
             <View style={styles.favoritesContainer}>
                 {jokes.map((item, index) => (
-                    <JokeCard joke={item} />
+                    <JokeCard key={item.id} joke={item} />
                 ))}
             </View>
         </ScrollView>
